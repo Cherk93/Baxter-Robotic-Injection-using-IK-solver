@@ -35,9 +35,6 @@ To demonstrate robotic injection by using Baxter robot to scan a surface(2D/3D) 
 
 
 
-### Example Results: 
-
-
 
 
 
