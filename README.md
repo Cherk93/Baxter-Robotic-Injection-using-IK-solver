@@ -19,12 +19,23 @@ To demonstrate robotic injection by using Baxter robot to scan a surface(2D/3D) 
 5. Enable the Robot <br>
 'rosrun baxter_interface enable_robot.py -e'
 6. You could run several example codes that are given in the Rethink robotics Github repository [^3]
+7. We then need to convert the camera( Inter_real_sense) Frame of Reference to Robot Frame of Reference. For this we used the [Baxter Introduction PDF](BAXTER_Introduction_2_08_2016.pdf)
+8. For example - In our case, using this we developed a transformation matrix from the torso of the robot to the camera frame as below: <br>
+
+<img src="https://github.com/Cherk93/Baxter-Robotic-Injection-using-IK-solver/assets/83907972/33fe3eaa-ad0e-4e6d-86e3-1f78b38f30c1" width="200" height="200">
+
 
 ## Code to Run Robotic Injection 
-1. 
+1. You first need to execute the ***IRS_CV_ver2.py*** script in the ROS_MASTER. This has a publish node that will send the 3D pixel information as 'Point' class datatype
+2. Then you can execute the ***Baxter_control.py*** script that has a subscriber node that subscribed to this point datatype information
+3. A rotation matrix operation is performed to transform the coordinates from camera frame to robot torso frame
+4. We then use the forward kinematics and inverse kinematics functions included in the Baxter SDK. [^2]  to move the robot to its initial posture and then move the left arm end effector to the target coordinates. 
+5. The Baxter control subscriber node waits until it receives the `move` command from the operator to start publishing the IK solution for joints to the `baxter_interface` node which in turn will move the robot to the final position. 
+6. Finally Baxter controller calls the forward kinematics code in the `baxter_interface` function class to make the end effector perform a final forward kinematics maneuver to emulate injection on the human subject. 
 
 
 
+### Example Results: 
 
 
 
